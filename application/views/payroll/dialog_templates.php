@@ -1,4 +1,5 @@
 <?php
+echo 'test';
 defined('BASEPATH') OR exit('No direct script access allowed');
 if(isset($_GET['jd']) && isset($_GET['salary_template_id']) && $_GET['data']=='payroll'){
 ?>
