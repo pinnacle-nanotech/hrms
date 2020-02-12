@@ -55,7 +55,9 @@ $(document).ready(function() {
 	
 	/* Add data */ /*Form Submit*/
 	$("#xin-form").submit(function(e){
+            
 	e.preventDefault();
+        
 		var obj = $(this), action = obj.attr('name');
 		$('.save').prop('disabled', true);
 		$('.icon-spinner3').show();
@@ -85,29 +87,4 @@ $(document).ready(function() {
 $( document ).on( "click", ".delete", function() {
 	$('input[name=_token]').val($(this).data('record-id'));
 	$('#delete_record').attr('action',site_url+'payroll/delete_template/'+$(this).data('record-id'))+'/';
-});
-$(document).on("keyup", function () {
-	var sum_total = 0;
-	var deduction = 0;
-	var allowance = 0;
-	var net_salary = 0;
-	$(".salary").each(function () {
-		sum_total += +$(this).val();
-	});
-	
-	$(".deduction").each(function () {
-		deduction += +$(this).val();
-	});
-	
-	$(".allowance").each(function () {
-		allowance += +$(this).val();
-	});
-	
-	$("#total").val(sum_total);
-	$("#total_deduction").val(deduction);
-	$("#total_allowance").val(allowance);
-	
-	
-	var net_salary = sum_total - deduction;
-	$("#net_salary").val(net_salary);
 });

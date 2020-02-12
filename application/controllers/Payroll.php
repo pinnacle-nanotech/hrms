@@ -56,6 +56,7 @@ class Payroll extends MY_Controller {
 			redirect('dashboard/');
 		}		  
      }
+     
 	 
 	 public function pdf_create() {
 		 
@@ -726,27 +727,18 @@ class Payroll extends MY_Controller {
 				$full_name = '--';	
 			  }
 			  
-			  // get basic salary
-			  $sbs = $this->Xin_model->currency_sign($r->basic_salary);
-			  // get net salary
-			  $sns = $this->Xin_model->currency_sign($r->net_salary);
 			  // get date > created at > and format
 			  $cdate = $this->Xin_model->set_date_format($r->created_at);
-			  // total allowance
-				if($r->total_allowance == 0 || $r->total_allowance=='') {
-					$allowance = '--';
-				} else{
-					$allowance = $this->Xin_model->currency_sign($r->total_allowance);
-				}
+			  
 
                $data[] = array(
 			   		'<span data-toggle="tooltip" data-placement="top" title="'.$this->lang->line('xin_edit').'"><button type="button" class="btn btn-secondary btn-sm m-b-0-0 waves-effect waves-light"  data-toggle="modal" data-target=".edit-modal-data"  data-salary_template_id="'. $r->salary_template_id . '"><i class="fa fa-pencil-square-o"></i></button></span><span data-toggle="tooltip" data-placement="top" title="'.$this->lang->line('xin_delete').'"><button type="button" class="btn btn-danger btn-sm m-b-0-0 waves-effect waves-light delete" data-toggle="modal" data-target=".delete-modal" data-record-id="'. $r->salary_template_id . '"><i class="fa fa-trash-o"></i></button></span>',
-                    $r->salary_grades,
-                    $sbs,
-                    $sns,
-                    $allowance,
-					$full_name,
-					$cdate
+                    $r->template_name,
+                    $r->basic_salary,
+                    $r->house_rent_allowance,
+                    $r->provident_fund,
+                    $full_name,
+                    $cdate
                );
           }
 
@@ -1526,20 +1518,15 @@ class Payroll extends MY_Controller {
 		$result = $this->Payroll_model->read_template_information($id);
 		$data = array(
 				'salary_template_id' => $result[0]->salary_template_id,
-				'salary_grades' => $result[0]->salary_grades,
-				'basic_salary' => $result[0]->basic_salary,
+				'template_name' => $result[0]->template_name,
+				'basic_salary' => str_replace("%","", $result[0]->basic_salary),
 				'overtime_rate' => $result[0]->overtime_rate,
-				'house_rent_allowance' => $result[0]->house_rent_allowance,
+				'house_rent_allowance' => str_replace("%","", $result[0]->house_rent_allowance),
 				'medical_allowance' => $result[0]->medical_allowance,
 				'travelling_allowance' => $result[0]->travelling_allowance,
 				'dearness_allowance' => $result[0]->dearness_allowance,
-				'security_deposit' => $result[0]->security_deposit,
-				'provident_fund' => $result[0]->provident_fund,
+				'provident_fund' => str_replace("%","", $result[0]->provident_fund),
 				'tax_deduction' => $result[0]->tax_deduction,
-				'gross_salary' => $result[0]->gross_salary,
-				'total_allowance' => $result[0]->total_allowance,
-				'total_deduction' => $result[0]->total_deduction,
-				'net_salary' => $result[0]->net_salary,
 				'added_by' => $result[0]->added_by,
 				);
 		if(!empty($session)){ 
@@ -1734,7 +1721,7 @@ class Payroll extends MY_Controller {
 		$Return = array('result'=>'', 'error'=>'');
 			
 		/* Server side PHP input validation */
-		if($this->input->post('salary_grades')==='') {
+		if($this->input->post('template_name')==='') {
         	$Return['error'] = $this->lang->line('xin_error_template_name');
 		} else if($this->input->post('basic_salary')==='') {
 			$Return['error'] = $this->lang->line('xin_error_basic_salary');
@@ -1745,24 +1732,20 @@ class Payroll extends MY_Controller {
     	}
 	
 		$data = array(
-		'salary_grades' => $this->input->post('salary_grades'),
-		'basic_salary' => $this->input->post('basic_salary'),
+		'template_name' => $this->input->post('template_name'),
+		'basic_salary' => $this->input->post('basic_salary').'%',
 		'overtime_rate' => $this->input->post('overtime_rate'),
-		'house_rent_allowance' => $this->input->post('house_rent_allowance'),
+		'house_rent_allowance' => $this->input->post('house_rent_allowance').'%',
 		'medical_allowance' => $this->input->post('medical_allowance'),
 		'travelling_allowance' => $this->input->post('travelling_allowance'),
 		'dearness_allowance' => $this->input->post('dearness_allowance'),
-		'provident_fund' => $this->input->post('provident_fund'),
+		'provident_fund' => $this->input->post('provident_fund').'%',
 		'tax_deduction' => $this->input->post('tax_deduction'),
-		'security_deposit' => $this->input->post('security_deposit'),
-		'gross_salary' => $this->input->post('gross_salary'),
-		'total_allowance' => $this->input->post('total_allowance'),
-		'total_deduction' => $this->input->post('total_deduction'),
-		'net_salary' => $this->input->post('net_salary'),
 		'added_by' => $this->input->post('user_id'),
 		'created_at' => date('d-m-Y h:i:s'),
 		
 		);
+                
 		$result = $this->Payroll_model->add_template($data);
 		if ($result == TRUE) {
 			$Return['result'] = $this->lang->line('xin_success_payroll_template_added');
@@ -1831,20 +1814,15 @@ class Payroll extends MY_Controller {
     	}
 	
 		$data = array(
-		'salary_grades' => $this->input->post('salary_grades'),
-		'basic_salary' => $this->input->post('basic_salary'),
+		'template_name' => $this->input->post('template_name'),
+		'basic_salary' => $this->input->post('basic_salary').'%',
 		'overtime_rate' => $this->input->post('overtime_rate'),
-		'house_rent_allowance' => $this->input->post('house_rent_allowance'),
+		'house_rent_allowance' => $this->input->post('house_rent_allowance').'%',
 		'medical_allowance' => $this->input->post('medical_allowance'),
 		'travelling_allowance' => $this->input->post('travelling_allowance'),
 		'dearness_allowance' => $this->input->post('dearness_allowance'),
-		'provident_fund' => $this->input->post('provident_fund'),
-		'tax_deduction' => $this->input->post('tax_deduction'),
-		'security_deposit' => $this->input->post('security_deposit'),
-		'gross_salary' => $this->input->post('gross_salary'),
-		'total_allowance' => $this->input->post('total_allowance'),
-		'total_deduction' => $this->input->post('total_deduction'),
-		'net_salary' => $this->input->post('net_salary')
+		'provident_fund' => $this->input->post('provident_fund').'%',
+		'tax_deduction' => $this->input->post('tax_deduction')
 		);	
 		
 		$result = $this->Payroll_model->update_template_record($data,$id);		

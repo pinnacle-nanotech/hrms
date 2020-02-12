@@ -11,7 +11,7 @@
  
 	// get payroll templates
 	public function get_templates() {
-	  return $this->db->get("xin_salary_templates");
+	  return $this->db->get("xin_salary_templates_new");
 	}
 	
 	// get payroll templates
@@ -70,7 +70,7 @@
 	
 		$condition = "salary_template_id =" . "'" . $id . "'";
 		$this->db->select('*');
-		$this->db->from('xin_salary_templates');
+		$this->db->from('xin_salary_templates_new');
 		$this->db->where($condition);
 		$this->db->limit(1);
 		$query = $this->db->get();
@@ -168,7 +168,7 @@
 	
 	// Function to add record in table
 	public function add_template($data){
-		$this->db->insert('xin_salary_templates', $data);
+		$this->db->insert('xin_salary_templates_new', $data);
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		} else {
@@ -219,7 +219,7 @@
 	// Function to Delete selected record from table
 	public function delete_template_record($id){
 		$this->db->where('salary_template_id', $id);
-		$this->db->delete('xin_salary_templates');
+		$this->db->delete('xin_salary_templates_new');
 		
 	}
 	
@@ -240,7 +240,7 @@
 	// Function to update record in table
 	public function update_template_record($data, $id){
 		$this->db->where('salary_template_id', $id);
-		if( $this->db->update('xin_salary_templates',$data)) {
+		if( $this->db->update('xin_salary_templates_new',$data)) {
 			return true;
 		} else {
 			return false;
@@ -257,7 +257,7 @@
 	// get all salary tempaltes > payroll templates
 	public function all_salary_templates()
 	{
-	  $query = $this->db->query("SELECT * from xin_salary_templates");
+	  $query = $this->db->query("SELECT * from xin_salary_templates_new");
   	  return $query->result();
 	}
 	

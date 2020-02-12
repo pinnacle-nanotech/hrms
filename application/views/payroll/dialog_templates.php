@@ -1,5 +1,4 @@
 <?php
-echo 'test';
 defined('BASEPATH') OR exit('No direct script access allowed');
 if(isset($_GET['jd']) && isset($_GET['salary_template_id']) && $_GET['data']=='payroll'){
 ?>
@@ -11,7 +10,7 @@ if(isset($_GET['jd']) && isset($_GET['salary_template_id']) && $_GET['data']=='p
 <form class="m-b-1" action="<?php echo site_url("payroll/update_template").'/'.$salary_template_id; ?>" method="post" name="update_template" id="update_template" autocomplete="off">
   <input type="hidden" name="_method" value="EDIT">
   <input type="hidden" name="_token" value="<?php echo $salary_template_id;?>">
-  <input type="hidden" name="ext_name" value="<?php echo $salary_grades;?>">
+  <input type="hidden" name="ext_name" value="<?php echo $template_name;?>">
   <div class="modal-body">
     <div class="bg-white">
       <div class="box-block">
@@ -20,8 +19,8 @@ if(isset($_GET['jd']) && isset($_GET['salary_template_id']) && $_GET['data']=='p
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="salary_grades"><?php echo $this->lang->line('xin_name_of_template');?></label>
-                  <input class="form-control" placeholder="<?php echo $this->lang->line('xin_name_of_template');?>" name="salary_grades" type="text" value="<?php echo $salary_grades;?>">
+                  <label for="template_name"><?php echo $this->lang->line('xin_name_of_template');?></label>
+                  <input class="form-control" placeholder="<?php echo $this->lang->line('xin_name_of_template');?>" name="template_name" type="text" value="<?php echo $template_name;?>">
                 </div>
               </div>
               <div class="col-md-4">
@@ -86,39 +85,6 @@ if(isset($_GET['jd']) && isset($_GET['salary_template_id']) && $_GET['data']=='p
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="security_deposit"><?php echo $this->lang->line('xin_payroll_security_deposit');?></label>
-                  <input class="form-control m_deduction" placeholder="Amount" name="security_deposit" type="text" value="<?php echo $security_deposit;?>">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-right">
-            <h2><strong><?php echo $this->lang->line('xin_payroll_total_salary_details');?></strong></h2>
-            <table class="table table-bordered custom-table">
-              <tbody>
-                <tr>
-                  <th class="col-sm-4 vertical-td" style="text-align:right;"><?php echo $this->lang->line('xin_payroll_gross_salary');?> :</th>
-                  <td class="hidden-print"><input type="text" name="gross_salary" readonly id="m_total" class="form-control" value="<?php echo $gross_salary;?>"></td>
-                </tr>
-                <tr>
-                  <th class="col-sm-4 vertical-td" style="text-align:right;"><?php echo $this->lang->line('xin_payroll_total_allowance');?> :</th>
-                  <td class="hidden-print"><input type="text" name="total_allowance" readonly id="m_total_allowance" class="form-control" value="<?php echo $total_allowance;?>"></td>
-                </tr>
-                <tr>
-                  <th class="col-sm-4 vertical-td" style="text-align:right;"><?php echo $this->lang->line('xin_payroll_total_deduction');?> :</th>
-                  <td class="hidden-print"><input type="text" name="total_deduction" readonly id="m_total_deduction" class="form-control" value="<?php echo $total_deduction;?>"></td>
-                </tr>
-                <tr>
-                  <th class="col-sm-4 vertical-td" style="text-align:right;"><?php echo $this->lang->line('xin_payroll_net_salary');?> :</th>
-                  <td class="hidden-print"><input type="text" name="net_salary" readonly id="m_net_salary" class="form-control" value="<?php echo $net_salary;?>"></td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
