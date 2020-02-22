@@ -942,6 +942,7 @@ $lang['xin_payroll_select_hourly'] = 'Select Hourly';
 $lang['xin_select'] = 'Select';
 $lang['xin_payroll_enter_salary'] = 'Enter Gross Salary';
 $lang['xin_payroll_select_monthly'] = 'Select Monthly Template';
+$lang['xin_payroll_select_template'] = 'Select Template';
 $lang['xin_error_template_name'] = 'The name of template field is required.';
 $lang['xin_error_basic_salary'] = 'The basic salary field is required.';
 $lang['xin_success_payroll_template_added'] = 'Payroll Tempalte added.';

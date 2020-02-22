@@ -1278,7 +1278,7 @@ class Payroll extends MY_Controller {
 		/*  all salary templates */
 		$_salary_template = '';
 		$salary_radio = '
-		<span data-toggle="tooltip" data-placement="top" title="'.$this->lang->line('xin_payroll_select_monthly').'">
+		<span data-toggle="tooltip" data-placement="top" title="'.$this->lang->line('xin_payroll_select_template').'">
 		<label class="custom-control custom-checkbox">
 			<input type="checkbox" class="custom-control-input monthly_grade monthly_'.$r->user_id.'" id="'.$r->user_id.'" name="grade_status['.$r->user_id.']" value="monthly" '.$m_checked.'>
 			<span class="custom-control-indicator"></span>
