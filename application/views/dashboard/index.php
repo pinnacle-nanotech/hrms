@@ -45,7 +45,7 @@ if(!is_null($department)){
       <div class="t-content">
         <h1 class="mb-1">
           <?php $all_sal = $this->Xin_model->get_total_salaries_paid();?>
-          <?php echo $this->Xin_model->currency_sign($all_sal[0]->paid_amount);?></h1>
+          <?php echo $this->Xin_model->currency_sign(round($all_sal[0]->paid_amount));?></h1>
         <h6 class="text-uppercase"><?php echo $this->lang->line('dashboard_total_salaries');?></h6>
       </div>
     </div>
@@ -556,7 +556,7 @@ if(!is_null($department)){
                     $y =  date('Y');
                     $numDays = cal_days_in_month (CAL_GREGORIAN, $m,$y);
                     ?>
-        <h1 class="mb-0"><?php echo count($this->Xin_model->current_month_attendance());?>/<?php echo $numDays;?></h1>
+        <h1 class="mb-0"><?php echo $this->Xin_model->current_month_attendance();?>/<?php echo $numDays;?></h1>
       </div>
     </div>
   </div>
@@ -564,7 +564,7 @@ if(!is_null($department)){
     <div class="box box-block bg-white tile tile-3 mb-2">
       <div class="t-content">
         <h6 class="text-uppercase text-danger"><?php echo $this->lang->line('dashboard_total_awards');?></h6>
-        <h1 class="mb-0"><?php echo count($this->Xin_model->total_employee_awards());?></h1>
+        <h1 class="mb-0"><?php echo $this->Xin_model->total_employee_awards();?></h1>
       </div>
     </div>
   </div>

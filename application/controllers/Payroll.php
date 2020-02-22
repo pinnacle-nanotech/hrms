@@ -360,27 +360,27 @@ class Payroll extends MY_Controller {
 			 </tr>
 			 <tr>
 				<td colspan="2">'.$this->lang->line('xin_payroll_basic_salary').'</td>
-				<td colspan="2" align="right">'.$this->Xin_model->currency_sign($payment[0]->basic_salary).'</td>
+				<td colspan="2" align="right">'.$this->Xin_model->currency_sign(round($payment[0]->basic_salary)).'</td>
 			</tr>
 			<tr>
 				<td colspan="2">&nbsp;</td>
 				<td>'.$this->lang->line('xin_payroll_gross_salary').'</td>
-				<td align="right">'.$this->Xin_model->currency_sign($payment[0]->gross_salary).'</td>
+				<td align="right">'.$this->Xin_model->currency_sign(round($payment[0]->gross_salary)).'</td>
 			</tr>
 			<tr>
 				<td colspan="2">&nbsp;</td>
 				<td>'.$this->lang->line('xin_payroll_total_allowance').'</td>
-				<td align="right">'.$this->Xin_model->currency_sign($payment[0]->total_allowances).'</td>
+				<td align="right">'.$this->Xin_model->currency_sign(round($payment[0]->total_allowances)).'</td>
 			</tr>
 			<tr>
 				<td colspan="2">&nbsp;</td>
 				<td>'.$this->lang->line('xin_payroll_total_deduction').'</td>
-				<td align="right">'.$this->Xin_model->currency_sign($payment[0]->total_deductions).'</td>
+				<td align="right">'.$this->Xin_model->currency_sign(round($payment[0]->total_deductions)).'</td>
 			</tr>
 			<tr>
 				<td colspan="2">&nbsp;</td>
 				<td>'.$this->lang->line('xin_payroll_net_salary').'</td>
-				<td align="right">'.$this->Xin_model->currency_sign($payment[0]->net_salary).'</td>
+				<td align="right">'.$this->Xin_model->currency_sign(round($payment[0]->net_salary)).'</td>
 			</tr>
 			'.$ad_sl.'
 			<tr>
@@ -637,27 +637,27 @@ class Payroll extends MY_Controller {
 				'monthly_grade_id' => $user[0]->monthly_grade_id,
 				'hourly_grade_id' => $user[0]->hourly_grade_id,
 				'make_payment_id' => $result[0]->make_payment_id,
-				'basic_salary' => $result[0]->basic_salary,
+				'basic_salary' => round($result[0]->basic_salary),
 				'payment_date' => $result[0]->payment_date,
 				'is_advance_salary_deduct' => $result[0]->is_advance_salary_deduct,
-				'advance_salary_amount' => $result[0]->advance_salary_amount,
-				'payment_amount' => $result[0]->payment_amount,
+				'advance_salary_amount' => round($result[0]->advance_salary_amount),
+				'payment_amount' => round($result[0]->payment_amount),
 				'payment_method' => $p_method,
 				'overtime_rate' => $result[0]->overtime_rate,
 				'hourly_rate' => $result[0]->hourly_rate,
 				'total_hours_work' => $result[0]->total_hours_work,
 				'is_payment' => $result[0]->is_payment,
-				'house_rent_allowance' => $result[0]->house_rent_allowance,
-				'medical_allowance' => $result[0]->medical_allowance,
-				'travelling_allowance' => $result[0]->travelling_allowance,
-				'dearness_allowance' => $result[0]->dearness_allowance,
-				'provident_fund' => $result[0]->provident_fund,
-				'security_deposit' => $result[0]->security_deposit,
-				'tax_deduction' => $result[0]->tax_deduction,
-				'gross_salary' => $result[0]->gross_salary,
-				'total_allowances' => $result[0]->total_allowances,
-				'total_deductions' => $result[0]->total_deductions,
-				'net_salary' => $result[0]->net_salary,
+				'house_rent_allowance' => round($result[0]->house_rent_allowance),
+				'medical_allowance' => round($result[0]->medical_allowance),
+				'travelling_allowance' => round($result[0]->travelling_allowance),
+				'dearness_allowance' => round($result[0]->dearness_allowance),
+				'provident_fund' => round($result[0]->provident_fund),
+				'security_deposit' => round($result[0]->security_deposit),
+				'tax_deduction' => round($result[0]->tax_deduction),
+				'gross_salary' => round($result[0]->gross_salary),
+				'total_allowances' => round($result[0]->total_allowances),
+				'total_deductions' => round($result[0]->total_deductions),
+				'net_salary' => round($result[0]->net_salary),
 				'comments' => $result[0]->comments,
 				);
 		$data['breadcrumbs'] = $this->lang->line('xin_payroll_employee_payslip');
@@ -934,7 +934,7 @@ class Payroll extends MY_Controller {
 			  		  
 			  $month_payment = date("F, Y", strtotime($r->payment_date));
 
-			  $p_amount = $this->Xin_model->currency_sign($r->payment_amount);
+			  $p_amount = $this->Xin_model->currency_sign(round($r->payment_amount));
 	
 			  // get date > created at > and format
 			  $created_at = $this->Xin_model->set_date_format($r->created_at);
@@ -1123,10 +1123,10 @@ class Payroll extends MY_Controller {
 			} else if($r->monthly_grade_id !='' || $r->monthly_grade_id !=0) {
 				$grade_template = $this->Payroll_model->read_template_information($r->monthly_grade_id);
 				if(!is_null($grade_template)){
-					if($grade_template[0]->salary_grades){
-					$template = $grade_template[0]->salary_grades.' ('.$this->lang->line('xin_payroll_monthly').')';
+					if($grade_template[0]->template_name){
+					$template = $grade_template[0]->template_name.' ('.$this->lang->line('xin_payroll_monthly').')';
 					$basic_salary = $grade_template[0]->basic_salary;
-					$net_salary = $grade_template[0]->net_salary;
+					$net_salary = $r->salary;
 					$create_id = $grade_template[0]->salary_template_id;
 					$gd = 'sl';
 					$p_class = 'emo_monthly_pay';
@@ -1295,7 +1295,7 @@ class Payroll extends MY_Controller {
 		} else {
 			$m_selected = '';
 		}
-		$_salary_template .= '<option value="'.$salary_template->salary_template_id.'" '.$m_selected.'>'.$salary_template->salary_grades.'</option>';
+		$_salary_template .= '<option value="'.$salary_template->salary_template_id.'" '.$m_selected.'>'.$salary_template->template_name.'</option>';
 		}
 		$_salary_template .= '</select>';
 		
@@ -1306,6 +1306,8 @@ class Payroll extends MY_Controller {
 				$(".monthly_"+id).prop("checked", false);
 				$(".sm_monthly_"+id).prop("disabled", true);
 				$(".sm_monthly_"+id).val("0");
+                                $(".salary_"+id).prop("disabled", true);
+                                $(".salary_"+id).val("0");
 				if (th.is(":checked")) {
 					$(".sm_hourly_"+id).prop("disabled", false);
 				} else {
@@ -1323,12 +1325,20 @@ class Payroll extends MY_Controller {
 				$(".sm_hourly_"+id).val("0");
 				if (th.is(":checked")) {
 					$(".sm_monthly_"+id).prop("disabled", false);
+                                        $(".salary_"+id).prop("disabled", false);
 				} else {
 					$(".sm_monthly_"+id).val("0");
+                                        $(".salary_"+id).val("0");
 				}
 			});
 		});
 		</script>';
+                $_salary = '
+		<span data-toggle="tooltip" data-placement="top" title="'.$this->lang->line('xin_payroll_enter_salary').'">
+			<input type="text" class="form-control salary_'.$r->user_id.'" id="salary_'.$r->user_id.'" name="salary['.$r->user_id.']" value="'.$r->salary.'" '.$m_disabled.'>
+		</span>
+		';
+                
 		$fname = $r->first_name.' '.$r->last_name;
 		
 		if(($r->monthly_grade_id ==0 || $r->hourly_grade_id=='') && ($r->hourly_grade_id ==0 || $r->hourly_grade_id=='')) {
@@ -1347,7 +1357,8 @@ class Payroll extends MY_Controller {
                     $r->username,
                     $department_designation,
                     $hourly_rate,
-                    $_salary_template
+                    $_salary_template,
+                    $_salary
                );
           }
 
@@ -1445,6 +1456,13 @@ class Payroll extends MY_Controller {
 		$result = $this->Payroll_model->read_template_information($user[0]->monthly_grade_id);
 		$department = $this->Department_model->read_department_information($user[0]->department_id);
 		$location = $this->Location_model->read_location_information($department[0]->location_id);
+                
+                $total_salary = round(($user[0]->salary)/12);
+                $basic_salary = round(str_replace("%","", $result[0]->basic_salary) * $total_salary /100);
+                $house_rent_allowance = round(str_replace("%","", $result[0]->house_rent_allowance) * $total_salary /100);
+                $provident_fund = round(str_replace("%","", $result[0]->provident_fund) * $basic_salary /100);
+                
+                
 		$data = array(
 				'department_id' => $user[0]->department_id,
 				'designation_id' => $user[0]->designation_id,
@@ -1452,20 +1470,16 @@ class Payroll extends MY_Controller {
 				'company_id' => $location[0]->company_id,
 				'salary_template_id' => $result[0]->salary_template_id,
 				'user_id' => $user[0]->user_id,
-				'salary_grades' => $result[0]->salary_grades,
-				'basic_salary' => $result[0]->basic_salary,
+                                'net_salary' => round($user[0]->salary/12),
+				'salary_grades' => $result[0]->template_name,
+				'basic_salary' => $basic_salary,
 				'overtime_rate' => $result[0]->overtime_rate,
-				'house_rent_allowance' => $result[0]->house_rent_allowance,
-				'medical_allowance' => $result[0]->medical_allowance,
-				'travelling_allowance' => $result[0]->travelling_allowance,
-				'dearness_allowance' => $result[0]->dearness_allowance,
-				'security_deposit' => $result[0]->security_deposit,
-				'provident_fund' => $result[0]->provident_fund,
-				'tax_deduction' => $result[0]->tax_deduction,
-				'gross_salary' => $result[0]->gross_salary,
-				'total_allowance' => $result[0]->total_allowance,
-				'total_deduction' => $result[0]->total_deduction,
-				'net_salary' => $result[0]->net_salary,
+				'house_rent_allowance' => $house_rent_allowance,
+				'medical_allowance' => round($result[0]->medical_allowance/12),
+				'travelling_allowance' => round($result[0]->travelling_allowance/21),
+				'dearness_allowance' => round($result[0]->dearness_allowance/12),
+				'provident_fund' => $provident_fund,
+				'tax_deduction' => round($result[0]->tax_deduction/12),
 				'added_by' => $result[0]->added_by,
 				);
 		if(!empty($session)){ 
@@ -1572,6 +1586,7 @@ class Payroll extends MY_Controller {
 				'date_of_joining' => $user[0]->date_of_joining,
 				'profile_picture' => $user[0]->profile_picture,
 				'gender' => $user[0]->gender,
+                                'salary' => $user[0]->salary,
 				'monthly_grade_id' => $user[0]->monthly_grade_id,
 				'hourly_grade_id' => $user[0]->hourly_grade_id
 				);
@@ -1913,7 +1928,8 @@ class Payroll extends MY_Controller {
 			//update Hourly Grade info in DB
 			$data = array(
 			'hourly_grade_id' => $val,
-			'monthly_grade_id' => '0'
+			'monthly_grade_id' => '0',
+                         'salary' => '0'
 			);
 			$this->Payroll_model->update_hourlygrade_salary_template($data, $key);
 		}
@@ -1952,6 +1968,30 @@ class Payroll extends MY_Controller {
 				}
 		   }
 	   }
+           
+           
+           /* Set Salary/ for User */
+	   if(null!=$this->input->post('salary')) {
+		foreach($this->input->post('salary') as $key=>$val) {
+			//update Salary info in DB
+			$data = array(
+			'salary' => $val,
+			);
+			$this->Payroll_model->update_employee_salary($data, $key);
+		}
+	   } else {
+			foreach($this->input->post('user') as $key=>$val) {
+				//update salary template info in DB
+				if(null==$this->input->post('hourly_grade_id')) {
+					//update Hourly Grade info in DB
+					$data = array(
+					'salary' => '0',
+					);
+					$this->Payroll_model->update_employee_salary($data, $key);
+				}
+		   }
+	   }
+           
 	   
 		$Return['result'] = $this->lang->line('xin_success_salary_info_updated');
 		$this->output($Return);
@@ -2033,7 +2073,6 @@ class Payroll extends MY_Controller {
 		'dearness_allowance' => $this->input->post('dearness_allowance'),
 		'provident_fund' => $this->input->post('provident_fund'),
 		'tax_deduction' => $this->input->post('tax_deduction'),
-		'security_deposit' => $this->input->post('security_deposit'),
 		'overtime_rate' => $this->input->post('overtime_rate'),
 		'is_advance_salary_deduct' => $is_advance_deducted,
 		'advance_salary_amount' => $deduct_salary,

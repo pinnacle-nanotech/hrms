@@ -1396,7 +1396,7 @@ class xin_model extends CI_Model {
 		$current_month = date('Y-m');
 		$session = $this->session->userdata('username');
 		$query = $this->db->query("SELECT * from xin_attendance_time where attendance_date like '%".$current_month."%' and `employee_id` = '".$session['user_id']."'  group by attendance_date");
-		return $query->num_rows();
+                return $query->num_rows(); 
 	}
 	
 	// get total employee awards 

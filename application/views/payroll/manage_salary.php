@@ -56,7 +56,8 @@
                 <th><?php echo $this->lang->line('dashboard_username');?></th>
                 <th><?php echo $this->lang->line('dashboard_designation');?></th>
                 <th><?php echo $this->lang->line('xin_payroll_hourly');?></th>
-                <th><?php echo $this->lang->line('xin_payroll_monthly');?></th>
+                <th><?php echo $this->lang->line('xin_payroll_template');?></th>
+                <th><?php echo $this->lang->line('xin_salary');?></th>
               </tr>
             </thead>
           </table>

@@ -112,17 +112,15 @@ if(!is_null($advance_salary)){
     <?php else:?>
     <input type="hidden" name="tax_deduction" class="form-control" value="0">
     <?php endif;?>
-    <?php if($security_deposit!=''): ?>
-    <input type="hidden" name="security_deposit" value="<?php echo $security_deposit;?>">
-    <?php else:?>
-    <input type="hidden" name="security_deposit" class="form-control" value="0">
-    <?php endif;?>
     <?php if($house_rent_allowance!='' || $medical_allowance!='' || $travelling_allowance!='' || $dearness_allowance!=''): ?>
     <?php if($house_rent_allowance==0): $house_rent_allowance = 0; endif;?>
     <?php if($medical_allowance==0): $medical_allowance = 0; endif;?>
     <?php if($travelling_allowance==0): $travelling_allowance = 0; endif;?>
     <?php if($dearness_allowance==0): $dearness_allowance = 0; endif;?>
-    <?php $total_allow= $house_rent_allowance + $medical_allowance + $travelling_allowance + $dearness_allowance;?>
+    <?php 
+    $total_allow = $net_salary - $basic_salary;
+    $pay_amount = $pay_amount - $provident_fund - $tax_deduction;
+    ?>
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
@@ -134,8 +132,8 @@ if(!is_null($advance_salary)){
     <?php else:?>
     <input type="hidden" name="total_allowances" class="form-control" value="0">
     <?php endif;?>
-    <?php if($provident_fund!='' || $tax_deduction!='' || $security_deposit!=''): ?>
-    <?php $total_de= $provident_fund + $tax_deduction + $security_deposit;?>
+    <?php if($provident_fund!='' || $tax_deduction!=''): ?>
+    <?php $total_de= $provident_fund + $tax_deduction;?>
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">

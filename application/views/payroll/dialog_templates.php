@@ -164,9 +164,18 @@ if(isset($_GET['jd']) && isset($_GET['salary_template_id']) && $_GET['data']=='p
 	$("#m_net_salary").val(net_salary);
 	});
   </script>
-<?php } else if(isset($_GET['jd']) && isset($_GET['employee_id']) && $_GET['data']=='payroll_template' && $_GET['type']=='payroll_template'){ ?>
-<?php
+<?php } else if(isset($_GET['jd']) && isset($_GET['employee_id']) && $_GET['data']=='payroll_template' && $_GET['type']=='payroll_template'){
 $grade_template = $this->Payroll_model->read_template_information($monthly_grade_id);
+$total_salary = $salary;
+$basic_salary = str_replace("%","", $grade_template[0]->basic_salary) * $total_salary / 100;
+$hra = str_replace("%","", $grade_template[0]->house_rent_allowance) * $total_salary /100;
+$medical_allowance = $grade_template[0]->medical_allowance;
+$travelling_allowance = $grade_template[0]->travelling_allowance;
+$dearness_allowance = $grade_template[0]->dearness_allowance;
+$provident_fund = str_replace("%","", $grade_template[0]->provident_fund) * $basic_salary /100;
+
+$special_allowance = $total_salary - ($basic_salary + $hra + $medical_allowance + $travelling_allowance + $dearness_allowance + $provident_fund);
+
 $hourly_template = $this->Payroll_model->read_hourly_wage_information($hourly_grade_id);
 ?>
 <?php
@@ -219,6 +228,11 @@ if($profile_picture!='' && $profile_picture!='no file') {
                           <td>&nbsp;&nbsp;&nbsp;</td>
                           <td><?php echo $date_of_joining;?></td>
                         </tr>
+                        <tr>
+                          <td><strong><?php echo $this->lang->line('xin_salary');?></strong>:</td>
+                          <td>&nbsp;&nbsp;&nbsp;</td>
+                          <td><?php echo $salary;?></td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -239,12 +253,12 @@ if($profile_picture!='' && $profile_picture!='no file') {
             <div class="col-md-12">
               <div class="f">
                 <label for="name" class="control-label" style="text-align:right;"><strong><?php echo $this->lang->line('xin_payroll_template');?>: </strong></label>
-                <?php echo $grade_template[0]->salary_grades;?> </div>
+                <?php echo $grade_template[0]->template_name;?> </div>
             </div>
             <div class="col-md-12">
               <div class="f">
                 <label for="name" class="control-label" style="text-align:right;"><strong><?php echo $this->lang->line('xin_payroll_basic_salary');?>: </strong></label>
-                <?php echo $this->Xin_model->currency_sign($grade_template[0]->basic_salary);?></div>
+                <?php echo $this->Xin_model->currency_sign($basic_salary);?></div>
             </div>
             <?php if($grade_template[0]->overtime_rate!=0 || $grade_template[0]->overtime_rate!=''):?>
             <div class="col-md-12">
@@ -271,34 +285,32 @@ if($profile_picture!='' && $profile_picture!='no file') {
         <div class="card-block">
           <blockquote class="card-blockquote">
             <div class="row m-b-1">
-              <?php if($grade_template[0]->house_rent_allowance!='' || $grade_template[0]->house_rent_allowance!=0): ?>
+             
               <div class="col-md-12">
                 <div class="f">
                   <label for="name"><strong><?php echo $this->lang->line('xin_Payroll_house_rent_allowance');?>: </strong></label>
-                  <?php echo $this->Xin_model->currency_sign($grade_template[0]->house_rent_allowance);?></div>
+                  <?php echo $this->Xin_model->currency_sign($hra);?></div>
               </div>
-              <?php endif;?>
-              <?php if($grade_template[0]->medical_allowance!='' || $grade_template[0]->medical_allowance!=0): ?>
               <div class="col-md-12">
                 <div class="f">
                   <label for="name"><strong><?php echo $this->lang->line('xin_payroll_medical_allowance');?>: </strong></label>
-                  <?php echo $this->Xin_model->currency_sign($grade_template[0]->medical_allowance);?> </div>
+                  <?php echo $this->Xin_model->currency_sign($medical_allowance);?> </div>
               </div>
-              <?php endif;?>
-              <?php if($grade_template[0]->travelling_allowance!='' || $grade_template[0]->travelling_allowance!=0): ?>
               <div class="col-md-12">
                 <div class="f">
                   <label for="name"><strong><?php echo $this->lang->line('xin_payroll_travel_allowance');?>: </strong></label>
-                  <?php echo $this->Xin_model->currency_sign($grade_template[0]->travelling_allowance);?> </div>
+                  <?php echo $this->Xin_model->currency_sign($travelling_allowance);?> </div>
               </div>
-              <?php endif;?>
-              <?php if($grade_template[0]->dearness_allowance!='' || $grade_template[0]->dearness_allowance!=0): ?>
               <div class="col-md-12">
                 <div class="f">
                   <label for="name"><strong><?php echo $this->lang->line('xin_payroll_dearness_allowance');?>: </strong></label>
-                  <?php echo $this->Xin_model->currency_sign($grade_template[0]->dearness_allowance);?> </div>
+                  <?php echo $this->Xin_model->currency_sign($dearness_allowance);?> </div>
               </div>
-              <?php endif;?>
+                <div class="col-md-12">
+                <div class="f">
+                  <label for="name"><strong><?php echo $this->lang->line('xin_payroll_special_allowance');?>: </strong></label>
+                  <?php echo $this->Xin_model->currency_sign($special_allowance);?> </div>
+              </div>
             </div>
           </blockquote>
         </div>
@@ -311,13 +323,11 @@ if($profile_picture!='' && $profile_picture!='no file') {
         <div class="card-header text-uppercase"><b> <?php echo $this->lang->line('xin_deductions');?></b></div>
         <div class="card-block">
           <div class="row m-b-1">
-            <?php if($grade_template[0]->provident_fund!='' || $grade_template[0]->provident_fund!=0): ?>
             <div class="col-md-12">
               <div class="f">
                 <label for="name"><strong><?php echo $this->lang->line('xin_payroll_provident_fund_de');?>: </strong></label>
-                <?php echo $this->Xin_model->currency_sign($grade_template[0]->provident_fund);?> </div>
+                <?php echo $this->Xin_model->currency_sign($provident_fund);?> </div>
             </div>
-            <?php endif;?>
             <?php if($grade_template[0]->tax_deduction!='' || $grade_template[0]->tax_deduction!=0): ?>
             <div class="col-md-12">
               <div class="f">
@@ -325,62 +335,11 @@ if($profile_picture!='' && $profile_picture!='no file') {
                 <?php echo $this->Xin_model->currency_sign($grade_template[0]->tax_deduction);?> </div>
             </div>
             <?php endif;?>
-            <?php if($grade_template[0]->security_deposit!='' || $grade_template[0]->security_deposit!=0): ?>
-            <div class="col-md-12">
-              <div class="f">
-                <label for="name"><strong><?php echo $this->lang->line('xin_payroll_security_deposit');?>: </strong></label>
-                <?php echo $this->Xin_model->currency_sign($grade_template[0]->security_deposit);?> </div>
-            </div>
-            <?php endif;?>
           </div>
         </div>
       </div>
     </div>
     <?php endif;?>
-    <?php if(($grade_template[0]->house_rent_allowance!='' || $grade_template[0]->medical_allowance!='' || $grade_template[0]->travelling_allowance!='' || $grade_template[0]->dearness_allowance!='') && ($grade_template[0]->provident_fund!='' || $grade_template[0]->tax_deduction!='' || $grade_template[0]->security_deposit!='')){
-		$col_sm = 'col-sm-12';
-		$offset = 'offset-2md-3';
-	} else {
-		$col_sm = 'col-sm-12';
-		$offset = '';
-	}?>
-    <div class="<?php echo $col_sm;?> col-xs-12 <?php echo $offset;?>">
-      <div class="card">
-        <div class="card-header text-uppercase"><b> <?php echo $this->lang->line('xin_payroll_total_salary_details');?></b></div>
-        <div class="card-block">
-          <div class="row m-b-1">
-            <?php if($grade_template[0]->gross_salary!=''): ?>
-            <div class="col-md-12">
-              <div class="f">
-                <label for="name"><strong><?php echo $this->lang->line('xin_payroll_gross_salary');?>: </strong></label>
-                <?php echo $this->Xin_model->currency_sign($grade_template[0]->gross_salary);?> </div>
-            </div>
-            <?php endif;?>
-            <?php if($grade_template[0]->total_allowance && $grade_template[0]->total_allowance!='0'): ?>
-            <div class="col-md-12">
-              <div class="f">
-                <label for="name"><strong><?php echo $this->lang->line('xin_payroll_total_allowance');?>: </strong></label>
-                <?php echo $this->Xin_model->currency_sign($grade_template[0]->total_allowance);?> </div>
-            </div>
-            <?php endif;?>
-            <?php if($grade_template[0]->total_deduction!='' && $grade_template[0]->total_deduction!='0'): ?>
-            <div class="col-md-12">
-              <div class="f">
-                <label for="name"><strong><?php echo $this->lang->line('xin_payroll_total_deduction');?>: </strong></label>
-                <?php echo $this->Xin_model->currency_sign($grade_template[0]->total_deduction);?> </div>
-            </div>
-            <?php endif;?>
-            <?php if($grade_template[0]->net_salary!=''): ?>
-            <div class="col-md-12">
-              <div class="f">
-                <label for="name"><strong><?php echo $this->lang->line('xin_payroll_net_salary');?>: </strong></label>
-                <?php echo $this->Xin_model->currency_sign($grade_template[0]->net_salary);?> </div>
-            </div>
-            <?php endif;?>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 <?php } else if(isset($_GET['jd']) && isset($_GET['employee_id']) && $_GET['data']=='hourlywages' && $_GET['type']=='hourlywages'){ ?>
