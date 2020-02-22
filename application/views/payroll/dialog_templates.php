@@ -25,8 +25,8 @@ if(isset($_GET['jd']) && isset($_GET['salary_template_id']) && $_GET['data']=='p
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="basic_salary" class="control-label"><?php echo $this->lang->line('xin_payroll_basic_salary');?></label>
-                  <input class="form-control m_salary" placeholder="<?php echo $this->lang->line('xin_payroll_basic_salary');?>" name="basic_salary" type="text" value="<?php echo $basic_salary;?>">
+                  <label for="basic_salary" class="control-label"><?php echo $this->lang->line('xin_payroll_basic_salary_perc');?></label>
+                  <input class="form-control m_salary" placeholder="<?php echo $this->lang->line('xin_payroll_basic_salary_perc');?>" name="basic_salary" type="text" value="<?php echo $basic_salary;?>">
                 </div>
               </div>
               <div class="col-md-4">
@@ -44,7 +44,7 @@ if(isset($_GET['jd']) && isset($_GET['salary_template_id']) && $_GET['data']=='p
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="house_rent_allowance"><?php echo $this->lang->line('xin_Payroll_house_rent_allowance');?></label>
+                  <label for="house_rent_allowance"><?php echo $this->lang->line('xin_Payroll_house_rent_allowance_perc');?></label>
                   <input class="form-control m_salary m_allowance" placeholder="Amount" name="house_rent_allowance" type="text" value="<?php echo $house_rent_allowance;?>">
                 </div>
               </div>
@@ -74,7 +74,7 @@ if(isset($_GET['jd']) && isset($_GET['salary_template_id']) && $_GET['data']=='p
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="provident_fund"><?php echo $this->lang->line('xin_payroll_provident_fund_de');?></label>
+                  <label for="provident_fund"><?php echo $this->lang->line('xin_payroll_provident_fund_de_perc');?></label>
                   <input class="form-control m_deduction" placeholder="Amount" name="provident_fund" type="text" value="<?php echo $provident_fund;?>">
                 </div>
               </div>
