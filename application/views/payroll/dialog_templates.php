@@ -26,7 +26,7 @@ if(isset($_GET['jd']) && isset($_GET['salary_template_id']) && $_GET['data']=='p
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="basic_salary" class="control-label"><?php echo $this->lang->line('xin_payroll_basic_salary_perc');?></label>
-                  <input class="form-control m_salary" placeholder="<?php echo $this->lang->line('xin_payroll_basic_salary');?>" name="basic_salary" type="text" value="<?php echo $basic_salary;?>">
+                  <input class="form-control m_salary" placeholder="<?php echo $this->lang->line('xin_payroll_basic_salary_perc');?>" name="basic_salary" type="text" value="<?php echo $basic_salary;?>">
                 </div>
               </div>
               <div class="col-md-4">
