@@ -4,7 +4,7 @@ $(document).ready(function () {
     var xin_table = $('#xin_table').dataTable({
         "bDestroy": true,
         "ajax": {
-//            url: site_url + "payroll/payslip_list/?employee_id=" + employee_id + "&month_year=" + month_year,
+            url: site_url + "payroll/payslip_list/?employee_id=" + employee_id + "&month_year=" + month_year,
             type: 'GET'
         },
         "fnDrawCallback": function (settings) {
