@@ -28,8 +28,8 @@
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label for="basic_salary" class="control-label"><?php echo $this->lang->line('xin_payroll_basic_salary');?></label>
-                        <input class="form-control salary" placeholder="<?php echo $this->lang->line('xin_payroll_basic_salary');?>" name="basic_salary" type="number" min="1" max="100">
+                        <label for="basic_salary" class="control-label"><?php echo $this->lang->line('xin_payroll_basic_salary_perc');?></label>
+                        <input class="form-control salary" placeholder="<?php echo $this->lang->line('xin_payroll_basic_salary_perc');?>" name="basic_salary" type="number" min="1" max="100">
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -47,7 +47,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="house_rent_allowance"><?php echo $this->lang->line('xin_Payroll_house_rent_allowance');?></label>
+                        <label for="house_rent_allowance"><?php echo $this->lang->line('xin_Payroll_house_rent_allowance_perc');?></label>
                         <input class="form-control salary allowance" placeholder="<?php echo $this->lang->line('xin_amount');?>" name="house_rent_allowance" type="number" min="1" max="100">
                       </div>
                     </div>
@@ -77,7 +77,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="provident_fund"><?php echo $this->lang->line('xin_payroll_provident_fund_de');?></label>
+                        <label for="provident_fund"><?php echo $this->lang->line('xin_payroll_provident_fund_de_perc');?></label>
                         <input class="form-control deduction" placeholder="<?php echo $this->lang->line('xin_amount');?>" name="provident_fund"  type="number" min="1" max="100">
                       </div>
                     </div>
